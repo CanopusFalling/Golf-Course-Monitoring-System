@@ -1,16 +1,11 @@
 .Course-Image{
-    background-size: cover;
-    background-attachment: fixed;
-    transition: all 0.2s ease;
+	position: relative;
+	top: 0px;
+	left: 0px;
 }
 
-.Point-Overlay {
-    background-color: #333;
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    opacity: 0.75;
-    z-index: 2;
+.Point-Overlay{
+	position: absolute;
+	top: 860px;
+	left: 1130px;
 }
