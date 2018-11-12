@@ -12,20 +12,34 @@ $HunderedPXMarkLat = -0.484494;
 //To be done
 
 //Database Querying
-$Date = date('m-d-Y h:i:s', strtotime('-1 hour'));
-$Query = "SELECT * FROM GPSData WHERE DateTimeStamp >= " . $MinDate . ";";
+$time = time();
+$time = $time - 2000;
+$date = date('m-d-Y h:i:s', $time);
+$Query = "SELECT * FROM GPSData WHERE DateTimeStamp >= '" . $date . "';";
 
 
 
 $PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
-$Output = $PDO->Query($Command);
+$Output = $PDO->execute($Query);
+$Data = $Output->fetchaAll();
+
+foreach($Data as $Row){
+	echo $Row['0'] . $Row['1'] . $Row['2'] . $Row['3'] ."\n";
+}
 ?>
 <Head>
 <link rel="stylesheet" href="Styles.css">
 <Style>
 <?php
+$Count = 0;
+
 foreach($Output as $Row){
-	echo ".Point-Overlay{\n	position: absolute;\n	top: " . (($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$HunderedPXMarkLong))*100 . "px;\n	left: " . (($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$HunderedPXMarkLat))*100 . "px;";
+	echo $Row['0'] . $Row['1'] . $Row['2'] . $Row['3'] ."\n";
+}
+
+foreach($Output as $Row){
+	echo ".Point-Overlay" . $Count . "{\n	position: absolute;\n	top: " . (($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*100 . "px;\n	left: " . (($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*100 . "px;";
+	$Count = $Count + 1;
 }
 
 
@@ -38,12 +52,16 @@ foreach($Output as $Row){
 </Style>
 </Head>
 
-<div class="Course-Image"><img src="ImageGallery/BMSMap.png" alt="Course Map" (!--width="1300px" height="800px"--)></div>
+<!--<div class="Course-Image"><img src="ImageGallery/BMSMap.png" alt="Course Map"></div>-->
+<!--<div class="Course-Image"><img src="ImageGallery/CourseMap.png" alt="Course Map" width="1300px" height="800px"></div>-->
+
+<body>
 <?php
 foreach($Output as $Row){
-	echo ""$Row["UserID"] . "\n";
+	echo $Row['0'] . $Row['1'] . $Row['2'] . $Row['3'] ."\n";
 }
 ?>
 <div class="Point-Overlay"><img src="ImageGallery/Point.png" alt="Course Map"></div>
+</body>
 
 
