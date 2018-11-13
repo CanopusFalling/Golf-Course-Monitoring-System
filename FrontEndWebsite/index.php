@@ -1,4 +1,8 @@
 <?php
+//Refresh code
+$page = $_SERVER['PHP_SELF'];
+$sec = "5";
+header("Refresh: $sec; url=$page");
 
 //Location Cordinates
 
@@ -12,20 +16,25 @@ $HunderedPXMarkLat = -0.484494;
 //To be done
 
 //Database Querying
+//Query Generation
 $time = time();
-$time = $time - 2000;
+$time = $time - 3000;
 $date = date('m-d-Y h:i:s', $time);
 $Query = "SELECT * FROM GPSData WHERE DateTimeStamp >= '" . $date . "';";
 
-
-
+//Database connection and execution
 $PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
-$Output = $PDO->execute($Query);
-$Data = $Output->fetchaAll();
+$statement = $PDO->prepare($Query);
+$statement->execute();
+$results = $statement->fetchAll();
 
-foreach($Data as $Row){
-	echo $Row['0'] . $Row['1'] . $Row['2'] . $Row['3'] ."\n";
-}
+//Testing data
+//print_r($results);
+//foreach($results as $row)
+//{
+//	print_r($row);
+//}
+
 ?>
 <Head>
 <link rel="stylesheet" href="Styles.css">
@@ -33,35 +42,41 @@ foreach($Data as $Row){
 <?php
 $Count = 0;
 
-foreach($Output as $Row){
-	echo $Row['0'] . $Row['1'] . $Row['2'] . $Row['3'] ."\n";
-}
-
-foreach($Output as $Row){
-	echo ".Point-Overlay" . $Count . "{\n	position: absolute;\n	top: " . (($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*100 . "px;\n	left: " . (($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*100 . "px;";
+foreach($results as $Row){
+	$TopPX = intval((($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*100);
+	$LeftPX = intval((($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*100);
+	echo ".Point-Overlay" . $Count . "{\n	position: absolute;\n	top: " . $TopPX . "px;\n	left: " . $LeftPX . "px;\n}";
 	$Count = $Count + 1;
 }
 
 
 ?>
-.Point-Overlay{
+
+/*.Point-Overlay{
 	position: absolute;
 	top: 100px;
 	left: 100px;
-}
+}*/
 </Style>
 </Head>
 
-<!--<div class="Course-Image"><img src="ImageGallery/BMSMap.png" alt="Course Map"></div>-->
+<div class="Course-Image"><img src="ImageGallery/BMSMap.png" alt="Course Map" (width="1300px" height="800px")></div>
 <!--<div class="Course-Image"><img src="ImageGallery/CourseMap.png" alt="Course Map" width="1300px" height="800px"></div>-->
 
 <body>
 <?php
-foreach($Output as $Row){
-	echo $Row['0'] . $Row['1'] . $Row['2'] . $Row['3'] ."\n";
+$Count = 0;
+foreach($results as $Row){
+	echo "<div class='Point-Overlay" . $Count . "'><img src='ImageGallery/Point.png' alt='Player'></div>";
+	$Count = $Count + 1;
 }
+
+//Testing data
+echo "<PRE>";
+print_r($results);
+
 ?>
-<div class="Point-Overlay"><img src="ImageGallery/Point.png" alt="Course Map"></div>
+<!--<div class="Point-Overlay"><img src="ImageGallery/Point.png" alt="Player"></div>-->
 </body>
 
 
