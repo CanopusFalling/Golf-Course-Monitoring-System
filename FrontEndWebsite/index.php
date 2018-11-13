@@ -7,10 +7,10 @@ header("Refresh: $sec; url=$page");
 //Location Cordinates
 
 //BMS Testing (Comment Out During Actual Use)
-$TenPXMarkLong = 52.151415;
+$TenPXMarkLong = 52.151330;
 $TenPXMarkLat = -0.485627;
-$HunderedPXMarkLong = 52.150668;
-$HunderedPXMarkLat = -0.484494;
+$HunderedPXMarkLong = 52.150642;
+$HunderedPXMarkLat = -0.484531;
 
 //Bedford And County Location
 //To be done
@@ -18,8 +18,8 @@ $HunderedPXMarkLat = -0.484494;
 //Database Querying
 //Query Generation
 $time = time();
-$time = $time - 3000;
-$date = date('m-d-Y h:i:s', $time);
+$time = $time - 1000;
+$date = date('m-d-Y H:i:s', $time);
 $Query = "SELECT * FROM GPSData WHERE DateTimeStamp >= '" . $date . "';";
 
 //Database connection and execution
@@ -43,8 +43,8 @@ $results = $statement->fetchAll();
 $Count = 0;
 
 foreach($results as $Row){
-	$TopPX = intval((($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*100);
-	$LeftPX = intval((($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*100);
+	$TopPX = intval((($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*90);
+	$LeftPX = intval((($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*90);
 	echo ".Point-Overlay" . $Count . "{\n	position: absolute;\n	top: " . $TopPX . "px;\n	left: " . $LeftPX . "px;\n}";
 	$Count = $Count + 1;
 }
@@ -73,6 +73,7 @@ foreach($results as $Row){
 
 //Testing data
 echo "<PRE>";
+
 print_r($results);
 
 ?>
