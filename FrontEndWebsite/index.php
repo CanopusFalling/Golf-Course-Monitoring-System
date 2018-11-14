@@ -18,8 +18,8 @@ $HunderedPXMarkLat = -0.484531;
 //Database Querying
 //Query Generation
 $time = time();
-$time = $time - 1000;
-$date = date('m-d-Y H:i:s', $time);
+$time100 = $time - 100;
+$date = date('m-d-Y H:i:s', $time100);
 $Query = "SELECT * FROM GPSData WHERE DateTimeStamp >= '" . $date . "';";
 
 //Database connection and execution
@@ -45,18 +45,23 @@ $Count = 0;
 foreach($results as $Row){
 	$TopPX = intval((($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*90);
 	$LeftPX = intval((($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*90);
-	echo ".Point-Overlay" . $Count . "{\n	position: absolute;\n	top: " . $TopPX . "px;\n	left: " . $LeftPX . "px;\n}";
+	$HexCode = "#0000" . dechex(intval((intval($Row[1]-$time100))/(100/256)));
+	echo ".Point-Overlay" . $Count . "{\n	display: circle;\n	position: absolute;\n	width: 5px;\n	height: 5px;\n		background: " . $HexCode . ";\n	top: " . $TopPX . "px;\n	left: " . $LeftPX . "px;\n}";
 	$Count = $Count + 1;
 }
 
 
 ?>
 
-/*.Point-Overlay{
+.Point-Overlay{
+	display: circle;
 	position: absolute;
+	width: 5px;
+	height: 5px;
+	background: #0000ff;
 	top: 100px;
 	left: 100px;
-}*/
+}
 </Style>
 </Head>
 
@@ -67,8 +72,10 @@ foreach($results as $Row){
 <?php
 $Count = 0;
 foreach($results as $Row){
-	echo "<div class='Point-Overlay" . $Count . "'><img src='ImageGallery/Point.png' alt='Player'></div>";
+	echo "<div class='Point-Overlay" . $Count . "'></div>";
 	$Count = $Count + 1;
+	echo "#0000" . dechex(intval((intval($Row[1]-$time100))/(100/256)));
+	echo ":::" . $Row[1] - $time100;
 }
 
 //Testing data
@@ -77,7 +84,7 @@ echo "<PRE>";
 print_r($results);
 
 ?>
-<!--<div class="Point-Overlay"><img src="ImageGallery/Point.png" alt="Player"></div>-->
+<div class="Point-Overlay"></div>
 </body>
 
 
