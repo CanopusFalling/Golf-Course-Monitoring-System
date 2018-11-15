@@ -18,8 +18,8 @@ $HunderedPXMarkLat = -0.484531;
 //Database Querying
 //Query Generation
 $time = time();
-$time100 = $time - 100;
-$date = date('m-d-Y H:i:s', $time100);
+$timeMin = $time - 100;
+$date = date('m-d-Y H:i:s', $timeMin);
 $Query = "SELECT * FROM GPSData WHERE DateTimeStamp >= '" . $date . "';";
 
 //Database connection and execution
@@ -45,7 +45,17 @@ $Count = 0;
 foreach($results as $Row){
 	$TopPX = intval((($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*90);
 	$LeftPX = intval((($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*90);
-	$HexCode = "#0000" . dechex(intval((intval($Row[1]-$time100))/(100/256)));
+
+	$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
+	$TimeMade = $dtime->getTimestamp();
+
+	$HexAppend = dechex(intval(intval($TimeMade-$timeMin))*(256/100));
+	
+	if(strlen($HexAppend) == 1){
+		$HexAppend = "0" . $HexAppend;
+	}
+
+	$HexCode = "#" . $HexAppend . $HexAppend . "ff";
 	echo ".Point-Overlay" . $Count . "{\n	display: circle;\n	position: absolute;\n	width: 5px;\n	height: 5px;\n		background: " . $HexCode . ";\n	top: " . $TopPX . "px;\n	left: " . $LeftPX . "px;\n}";
 	$Count = $Count + 1;
 }
@@ -58,7 +68,7 @@ foreach($results as $Row){
 	position: absolute;
 	width: 5px;
 	height: 5px;
-	background: #0000ff;
+	background: #ffffff;
 	top: 100px;
 	left: 100px;
 }
@@ -74,8 +84,8 @@ $Count = 0;
 foreach($results as $Row){
 	echo "<div class='Point-Overlay" . $Count . "'></div>";
 	$Count = $Count + 1;
-	echo "#0000" . dechex(intval((intval($Row[1]-$time100))/(100/256)));
-	echo ":::" . $Row[1] - $time100;
+	$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
+	$TimeMade = $dtime->getTimestamp();
 }
 
 //Testing data
