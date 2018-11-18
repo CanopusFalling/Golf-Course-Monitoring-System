@@ -23,7 +23,8 @@ $date = date('m-d-Y H:i:s', $timeMin);
 $Query = "SELECT * FROM GPSData WHERE DateTimeStamp >= '" . $date . "';";
 
 //Database connection and execution
-$PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
+//$PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
+$PDO = new PDO('sqlite:C:\Users\kent_\OneDrive\Documents\Project work\GolfCourseGPSManagementSystem\Database\GolfData.db');
 $statement = $PDO->prepare($Query);
 $statement->execute();
 $results = $statement->fetchAll();
@@ -49,7 +50,7 @@ foreach($results as $Row){
 	$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
 	$TimeMade = $dtime->getTimestamp();
 
-	$HexAppend = dechex(intval(intval($TimeMade-$timeMin))*(256/100));
+	$HexAppend = dechex(256-(intval(intval($TimeMade-$timeMin))*(256/100)));
 	
 	if(strlen($HexAppend) == 1){
 		$HexAppend = "0" . $HexAppend;

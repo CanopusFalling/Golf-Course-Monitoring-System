@@ -6,7 +6,8 @@ $Command = "INSERT INTO GPSData (UserID, DateTimeStamp, Longitude, Latitude) VAL
 
 echo "\n" . $Command;
 
-$PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
+//$PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
+$PDO = new PDO('sqlite:C:\Users\kent_\OneDrive\Documents\Project work\GolfCourseGPSManagementSystem\Database\GolfData.db');
 $PDO->query($Command);
 
 ?>
