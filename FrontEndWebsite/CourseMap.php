@@ -29,16 +29,18 @@ $statement = $PDO->prepare($Query);
 $statement->execute();
 $results = $statement->fetchAll();
 
-//Testing data
-//print_r($results);
-//foreach($results as $row)
-//{
-//	print_r($row);
-//}
+
 
 ?>
 <Head>
 <link rel="stylesheet" href="Styles.css">
+<body>
+<Nav class="Navigation">
+	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
+	<li class="TopBlock" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
+	<li class="Login Block" href="Login.php">Login</li>
+	<li class="Login Block" href="SignIn.php">Sign Up</li>
+</Nav>
 <Style>
 <?php
 $Count = 0;
@@ -50,11 +52,7 @@ foreach($results as $Row){
 	$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
 	$TimeMade = $dtime->getTimestamp();
 
-<<<<<<< HEAD
-	$HexAppend = dechex(intval(intval($TimeMade-$timeMin)));
-=======
 	$HexAppend = dechex(256-(intval(intval($TimeMade-$timeMin))*(256/100)));
->>>>>>> c2a95a99b265263517cd08ea786c9f58a5b9d093
 	
 	if(strlen($HexAppend) == 1){
 		$HexAppend = "0" . $HexAppend;
@@ -74,7 +72,7 @@ foreach($results as $Row){
 <div class="Course-Image"><img src="ImageGallery/BMSMap.png" alt="Course Map" (width="1300px" height="800px")></div>
 <!--<div class="Course-Image"><img src="ImageGallery/CourseMap.png" alt="Course Map" width="1300px" height="800px"></div>-->
 
-<body>
+
 <?php
 $Count = 0;
 foreach($results as $Row){
