@@ -50,7 +50,11 @@ foreach($results as $Row){
 	$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
 	$TimeMade = $dtime->getTimestamp();
 
+<<<<<<< HEAD
+	$HexAppend = dechex(intval(intval($TimeMade-$timeMin)));
+=======
 	$HexAppend = dechex(256-(intval(intval($TimeMade-$timeMin))*(256/100)));
+>>>>>>> c2a95a99b265263517cd08ea786c9f58a5b9d093
 	
 	if(strlen($HexAppend) == 1){
 		$HexAppend = "0" . $HexAppend;
