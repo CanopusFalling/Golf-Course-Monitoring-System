@@ -49,7 +49,7 @@ foreach($results as $Row){
 	$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
 	$TimeMade = $dtime->getTimestamp();
 
-	$HexAppend = dechex(intval(intval($TimeMade-$timeMin))*(256/100));
+	$HexAppend = dechex(intval(intval($TimeMade-$timeMin)));
 	
 	if(strlen($HexAppend) == 1){
 		$HexAppend = "0" . $HexAppend;
