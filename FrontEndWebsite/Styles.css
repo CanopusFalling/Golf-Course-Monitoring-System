@@ -1,6 +1,6 @@
 body {
 	font-family: "Times New Roman", Georgia, Serif;
-	background: url(ImageGallery/bedfordcounty1.jpg) no-repeat center center fixed;
+	background: url(ImageGallery/NotTheCourseJustHD.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -21,7 +21,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .TitleTextBox{
-	background-color: rgba(80,80,80,0.5);
+	background-color: rgba(80,80,80,0.6);
 	margin: 150px;
 	padding:10px;
 }
