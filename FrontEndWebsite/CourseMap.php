@@ -1,8 +1,4 @@
 <?php
-//Refresh code
-$page = $_SERVER['PHP_SELF'];
-$sec = "5";
-header("Refresh: $sec; url=$page");
 
 //Location Cordinates
 
@@ -34,37 +30,51 @@ $results = $statement->fetchAll();
 ?>
 <Head>
 <link rel="stylesheet" href="Styles.css">
-<body>
+<Script rel="CourseMapLocationUpdater.js">
+function UpdateMap(){
+	var xhttp = new XMLHttpRequest();
+	
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("InsertDiv").innerHTML = this.responseText;
+		}
+	}
+	xhttp.open("GET", "CourseMapUpdater.php", true);
+	xhttp.send();
+}
+
+var points =[{
+id: "1234",
+x: 200,
+y: 300
+},
+{
+id: "2345",
+x: 300,
+y: 200
+}
+]
+
+window.onload = function(){
+	setInterval(UpdateMap, 5000);
+}
+</Script>
+<style>
+.Point-Overlay{
+	display: circle;
+	position: absolute;
+	width: 5px;
+	height: 5px;
+}
+</style>
+
 <Nav class="Navigation">
 	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="TopBlock" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
 	<li class="Login Block" href="Login.php">Login</li>
 	<li class="Login Block" href="SignIn.php">Sign Up</li>
 </Nav>
-<Style>
-<?php
-$Count = 0;
 
-foreach($results as $Row){
-	$TopPX = intval((($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*90);
-	$LeftPX = intval((($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*90);
-
-	$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
-	$TimeMade = $dtime->getTimestamp();
-
-	$HexAppend = dechex(256-(intval(intval($TimeMade-$timeMin))*(256/100)));
-	
-	if(strlen($HexAppend) == 1){
-		$HexAppend = "0" . $HexAppend;
-	}
-
-	$HexCode = "#" . $HexAppend . $HexAppend . "ff";
-	echo ".Point-Overlay" . $Count . "{\n	display: circle;\n	position: absolute;\n	width: 5px;\n	height: 5px;\n		background: " . $HexCode . ";\n	top: " . $TopPX . "px;\n	left: " . $LeftPX . "px;\n}";
-	$Count = $Count + 1;
-}
-
-
-?>
 
 </Style>
 </Head>
@@ -72,23 +82,8 @@ foreach($results as $Row){
 <div class="Course-Image"><img src="ImageGallery/BMSMap.png" alt="Course Map" (width="1300px" height="800px")></div>
 <!--<div class="Course-Image"><img src="ImageGallery/CourseMap.png" alt="Course Map" width="1300px" height="800px"></div>-->
 
+<div id="InsertDiv"></div>
 
-<?php
-$Count = 0;
-foreach($results as $Row){
-	echo "<div class='Point-Overlay" . $Count . "'></div>";
-	$Count = $Count + 1;
-	$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
-	$TimeMade = $dtime->getTimestamp();
-}
-
-//Testing data
-echo "<PRE>";
-
-print_r($results);
-
-?>
-<div class="Point-Overlay"></div>
 </body>
 
 
