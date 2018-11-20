@@ -30,43 +30,9 @@ $results = $statement->fetchAll();
 ?>
 <Head>
 <link rel="stylesheet" href="Styles.css">
-<Script rel="CourseMapLocationUpdater.js">
-function UpdateMap(){
-	var xhttp = new XMLHttpRequest();
-	
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("InsertDiv").innerHTML = this.responseText;
-		}
-	}
-	xhttp.open("GET", "CourseMapUpdater.php", true);
-	xhttp.send();
-}
+<Script src="CourseMapLocationUpdater.js"></Script>
 
-var points =[{
-id: "1234",
-x: 200,
-y: 300
-},
-{
-id: "2345",
-x: 300,
-y: 200
-}
-]
-
-window.onload = function(){
-	setInterval(UpdateMap, 5000);
-}
-</Script>
-<style>
-.Point-Overlay{
-	display: circle;
-	position: absolute;
-	width: 5px;
-	height: 5px;
-}
-</style>
+<div class="SlideshowFrame"></div>
 
 <Nav class="Navigation">
 	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
