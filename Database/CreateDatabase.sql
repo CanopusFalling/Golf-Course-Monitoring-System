@@ -22,7 +22,9 @@ DROP TABLE UserSessions;
 CREATE TABLE UserSessions(
                 SessionID INTEGER PRIMARY KEY,
                 SessionToken CHAR(50) NOT NULL,
-				DateIssued DATETIME NOT NULL
+				DateIssued DATETIME NOT NULL,
+				UserID INTEGER NOT NULL,
+				FOREIGN KEY (UserID) REFERENCES UserAccounts(UserID)
 				);
 				
 DROP TABLE PermissionGroupAllocation;

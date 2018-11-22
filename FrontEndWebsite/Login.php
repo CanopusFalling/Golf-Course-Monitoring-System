@@ -9,11 +9,11 @@ $SuccessMessage = "";
 if(!empty($_POST)){
 	$Email = $_POST["Email"];
 	$Password = $_POST["Password"];
-	$Command = "SELECT PasswordHash FROM UserAccounts WHERE Email = '" . $Email . "';";
+	$Command = "SELECT UserID, PasswordHash FROM UserAccounts WHERE Email = '" . $Email . "';";
 	$statement = $PDO->prepare($Command);
 	$statement->execute();
 	$results = $statement->fetchAll();
-	if(password_verify ($Password , $results[0][0])){
+	if(password_verify ($Password , $results[0][1])){
 		$SuccessMessage = "LoggedIn";
 		
 		$Token = "";
@@ -24,7 +24,7 @@ if(!empty($_POST)){
 		}
 		
 		$date = date('m-d-Y H:i:s', time());
-		$Command = "INSERT INTO UserSessions (SessionToken, DateIssued) VALUES ('" . $Token . "', '" . $date . "');";
+		$Command = "INSERT INTO UserSessions (SessionToken, DateIssued, UserID) VALUES ('" . $Token . "', '" . $date . "', " . $results[0][0] . ");";
 		$PDO->query($Command);
 		
 		setcookie("BedAndCountySessionToken", $Token, time() + (86400 * 30), "/");
