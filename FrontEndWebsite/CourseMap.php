@@ -32,13 +32,16 @@ $results = $statement->fetchAll();
 <link rel="stylesheet" href="Styles.css">
 <Script src="CourseMapLocationUpdater.js"></Script>
 
-<div class="SlideshowFrame"></div>
+<div class="Frame1"></div>
+<div class="Frame2"></div>
+<div class="Frame3"></div>
+<div class="Frame4"></div>
 
 <Nav class="Navigation">
 	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="TopBlock" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
-	<li class="Login Block" href="Login.php">Login</li>
-	<li class="Login Block" href="SignIn.php">Sign Up</li>
+	<li class="Login Block" onclick="window.location.href = 'Login.php'">Login</li>
+	<li class="Login Block" onclick="window.location.href = 'SignIn.php'">Sign Up</li>
 </Nav>
 
 

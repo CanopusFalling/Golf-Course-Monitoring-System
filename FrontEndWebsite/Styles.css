@@ -1,3 +1,4 @@
+/*General Formatting*/
 body {
 	-webkit-background-size: cover;
 	font-family: "Ubuntu", sans-serif;
@@ -8,6 +9,7 @@ h1,h2,h3,h4,h5,h6 {
     letter-spacing: 5px;
 }
 
+/*Title Formatting On Main Page*/
 .TitleText{
 	margin: 20px;
 	text-align: center;
@@ -21,6 +23,7 @@ h1,h2,h3,h4,h5,h6 {
 	padding:10px;
 }
 
+/*Navigation bar Blocks and Formatting*/
 .Navigation {
     list-style-type: none;
     margin: 0;
@@ -61,6 +64,75 @@ h1,h2,h3,h4,h5,h6 {
 	background-color: #777;
 }
 
+.TopLogin{
+	float: right;
+	display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+	background-color: #555;
+}
+
+/*Login/Signup Box formatting*/
+.SpacerDiv{
+	float: left;
+	margin: 10px;
+	padding: 8px;
+}
+
+.DetailsForm{
+	font-size: 20px;
+	background-color: rgba(80,80,80,0.6);
+	margin: 25px;
+	padding:20px;
+	width: 520px;
+	color: white;
+}
+
+.Mandatory-Star{
+	color: red;
+	display:inline;
+}
+
+.LoginInput{
+	width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0px;
+    box-sizing: border-box;
+	border: 0px;
+	background-color: rgba(50,50,50,0.6);
+	color: white;
+}
+
+.FormButton{
+    background-color: rgba(50,50,50,0.6);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    margin: 8px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	width: 100%;
+}
+
+.Error{
+	padding: 12px 20px;
+    margin: 8px 12px;
+	color: white;
+	background-color: rgba(100,0,0,0.6);
+}
+
+.Success{
+	padding: 12px 20px;
+    margin: 8px 12px;
+	color: white;
+	background-color: rgba(0,100,0,0.6);
+}
+
+/*Course map formattig and general point formatting*/
 .Course-Image{
 	position: relative;
 	top: 0px;
@@ -74,6 +146,7 @@ h1,h2,h3,h4,h5,h6 {
 	height: 5px;
 }
 
+/*Background Cycling Code*/
 @keyframes Slide1{
 	0%{
 		opacity: 1;
