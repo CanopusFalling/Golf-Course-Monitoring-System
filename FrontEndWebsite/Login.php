@@ -13,13 +13,13 @@ if(!empty($_POST)){
 	$statement = $PDO->prepare($Command);
 	$statement->execute();
 	$results = $statement->fetchAll();
-	$Hash = password_hash($Password, PASSWORD_DEFAULT);
-	if($results[0] == $Hash){
+	if(password_verify ($Password , $results[0][0])){
 		$SuccessMessage = "Success";
 	}else{
 		$ErrorMessage = "Invalid Credentials, Please Try Again.";
 	}
 }
+
 ?>
 
 <html>
@@ -37,10 +37,10 @@ if(!empty($_POST)){
 <div class="Frame4"></div>
 
 <Nav class="Navigation">
-	<li class="TopBlock" onclick="window.location.href = 'Index.php'">Home</li>
+	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
-	<li class="Login Block" onclick="window.location.href = 'Login.php'">Login</li>
-	<li class="TopLogin" onclick="window.location.href = 'SignIn.php'">Sign Up</li>
+	<li class="TopLogin" onclick="window.location.href = 'Login.php'">Login</li>
+	<li class="Login Block" onclick="window.location.href = 'SignIn.php'">Sign Up</li>
 </Nav>
 
 <div class="SpacerDiv">

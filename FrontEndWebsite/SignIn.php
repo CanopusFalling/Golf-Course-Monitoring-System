@@ -15,7 +15,7 @@ if(!empty($_POST)){
 	$UserName = $_POST['UserName'];
 	$Email = $_POST['Email'];
 	$DateOfBirth = $_POST['DateOfBirth'];
-	$Command = "INSERT INTO UserAccounts (UserName, Email, PasswordHash) VALUES ('" . $UserName . "', '" . $Email . "', '" . $Hash . "')";
+	$Command = "INSERT INTO UserAccounts (UserName, Email, FirstName, LastName, DateOfBirth, PasswordHash) VALUES ('" . $UserName . "', '" . $Email . "', '" . $FirstName . "', '" . $LastName . "', '" . $DateOfBirth . "', '" . $Hash . "')";
 	if($UserName !== "" || $Password !== "" || $RepeatPassword !== "" || $Email !== "" || $DateOfBirth !== ""){
 		if($Password == $RepeatPassword){
 			if(filter_var($Email, FILTER_VALIDATE_EMAIL)){
@@ -51,7 +51,7 @@ if(!empty($_POST)){
 <div class="Frame4"></div>
 
 <Nav class="Navigation">
-	<li class="TopBlock" onclick="window.location.href = 'Index.php'">Home</li>
+	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
 	<li class="Login Block" onclick="window.location.href = 'Login.php'">Login</li>
 	<li class="TopLogin" onclick="window.location.href = 'SignIn.php'">Sign Up</li>
@@ -61,7 +61,7 @@ if(!empty($_POST)){
 <form class="DetailsForm" method="post">
 <div class="Mandatory-Star">*</div>
 User Name:<br>
-<input class="LoginInput" type="text" name="UserName"><br>
+<input class="LoginInput" type="text" name="UserName" required><br>
 
 <div class="Mandatory-Star"></div>
 First Name:<br>

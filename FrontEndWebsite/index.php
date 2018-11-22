@@ -17,7 +17,7 @@
 <div class="Frame4"></div>
 
 <Nav class="Navigation">
-	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
+	<li class="TopBlock" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
 	<li class="Login Block" onclick="window.location.href = 'Login.php'">Login</li>
 	<li class="Login Block" onclick="window.location.href = 'SignIn.php'">Sign Up</li>
