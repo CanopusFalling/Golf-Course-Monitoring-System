@@ -14,7 +14,23 @@ if(!empty($_POST)){
 	$statement->execute();
 	$results = $statement->fetchAll();
 	if(password_verify ($Password , $results[0][0])){
-		$SuccessMessage = "Success";
+		$SuccessMessage = "LoggedIn";
+		
+		$Token = "";
+		$Characters = range('a','z');
+		for($i = 0; $i < 50; $i++){
+			$Num = mt_rand(0, 25);
+			$Token .= $Characters[$Num];
+		}
+		
+		$date = date('m-d-Y H:i:s', time());
+		$Command = "INSERT INTO UserSessions (SessionToken, DateIssued) VALUES ('" . $Token . "', '" . $date . "');";
+		$PDO->query($Command);
+		
+		setcookie("BedAndCountySessionToken", $Token, time() + (86400 * 30), "/");
+		
+		header("Location: UserHome.php");
+		die();
 	}else{
 		$ErrorMessage = "Invalid Credentials, Please Try Again.";
 	}

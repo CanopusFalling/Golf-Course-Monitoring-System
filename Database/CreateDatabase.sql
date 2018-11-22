@@ -18,6 +18,13 @@ CREATE TABLE UserAccounts(
                 PasswordHash CHAR(250) NOT NULL
 				);
 				
+DROP TABLE UserSessions;
+CREATE TABLE UserSessions(
+                SessionID INTEGER PRIMARY KEY,
+                SessionToken CHAR(50) NOT NULL,
+				DateIssued DATETIME NOT NULL
+				);
+				
 DROP TABLE PermissionGroupAllocation;
 CREATE TABLE PermissionGroupAllocation(
                 PermissionGroupAllocationID  INTEGER PRIMARY KEY,
