@@ -9,7 +9,7 @@ $SuccessMessage = "";
 if(!empty($_POST)){
 	$Email = $_POST["Email"];
 	$Password = $_POST["Password"];
-	$Command = "SELECT UserID, PasswordHash FROM UserAccounts WHERE Email = '" . $Email . "';";
+	$Command = "SELECT UserID, PasswordHash FROM UserAccounts WHERE Email = '" . strtolower($Email) . "';";
 	$statement = $PDO->prepare($Command);
 	$statement->execute();
 	$results = $statement->fetchAll();
@@ -63,7 +63,7 @@ if(!empty($_POST)){
 <form class="DetailsForm" method="post">
 
 Email:<br>
-<input class="LoginInput" type="text" name="Email" required><br>
+<input class="LoginInput" type="email" name="Email" required><br>
 
 Password:<br>
 <input class="LoginInput" type="password" name="Password" required><br>

@@ -11,7 +11,13 @@ $Command0 = "SELECT * FROM UserAccounts WHERE UserID = " . $SessionResults[0][3]
 $statement = $PDO->prepare($Command0);
 $statement->execute();
 $UserResults = $statement->fetchAll();
-
+$UserID = $UserResults[0][0];
+$Username = $UserResults[0][1];
+$Email = $UserResults[0][2];
+$FirstName = $UserResults[0][3];
+$SecondName = $UserResults[0][4];
+$DateOfBirth = $UserResults[0][5];
+$Password = $UserResults[0][5];
 ?>
 
 <html>
@@ -31,7 +37,19 @@ $UserResults = $statement->fetchAll();
 <Nav class="Navigation">
 	<li class="TopBlock" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
-	<li class="TopLogin"><?php echo $UserResults[0][1]?></li>
+	<li class="TopLogin"><?php echo $FirstName . " " . $SecondName;?></li>
 </Nav>
+
+<div class="PannelSpacer">
+<div class="Pannel">
+<div class="PannelItem">
+Welcome <?php echo $FirstName . " " . $SecondName;?>
+</div>
+
+<div class="PannelItem">
+
+</div>
+</div>
+</div>
 </body>
 </html>

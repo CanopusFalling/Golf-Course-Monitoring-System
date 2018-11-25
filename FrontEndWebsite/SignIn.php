@@ -15,7 +15,7 @@ if(!empty($_POST)){
 	$UserName = $_POST['UserName'];
 	$Email = $_POST['Email'];
 	$DateOfBirth = $_POST['DateOfBirth'];
-	$Command = "INSERT INTO UserAccounts (UserName, Email, FirstName, LastName, DateOfBirth, PasswordHash) VALUES ('" . $UserName . "', '" . $Email . "', '" . $FirstName . "', '" . $LastName . "', '" . $DateOfBirth . "', '" . $Hash . "')";
+	$Command = "INSERT INTO UserAccounts (UserName, Email, FirstName, LastName, DateOfBirth, PasswordHash) VALUES ('" . $UserName . "', '" . strtolower($Email) . "', '" . $FirstName . "', '" . $LastName . "', '" . $DateOfBirth . "', '" . $Hash . "')";
 	if($UserName !== "" || $Password !== "" || $RepeatPassword !== "" || $Email !== "" || $DateOfBirth !== ""){
 		if($Password == $RepeatPassword){
 			if(filter_var($Email, FILTER_VALIDATE_EMAIL)){
