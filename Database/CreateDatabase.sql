@@ -29,21 +29,26 @@ CREATE TABLE UserSessions(
 				
 DROP TABLE PermissionGroupAllocation;
 CREATE TABLE PermissionGroupAllocation(
-                PermissionGroupAllocationID  INTEGER PRIMARY KEY,
-                UserID INTEGER NOT NULL,
-                PermissionGroupID INTEGER NOT NULL
+				PermissionGroupAllocationID  INTEGER PRIMARY KEY,
+				UserID INTEGER NOT NULL,
+				PermissionGroupID INTEGER NOT NULL,
+				FOREIGN KEY (UserID) REFERENCES UserAccounts(UserID),
+				FOREIGN KEY (PermissionGroupID) REFERENCES PermissionGroups(PermissionGroupID)
 				);
 				
 DROP TABLE PermissionGroups;
 CREATE TABLE PermissionGroups(
                 PermissionGroupID INTEGER PRIMARY KEY,
-                PermissionGroupName VARCHAR(40) UNIQUE);
+                PermissionGroupName VARCHAR(40) UNIQUE
+				);
 
 DROP TABLE PermissionAllocation;
 CREATE TABLE PermissionAllocation(
                 PermissionAllocationID INTEGER PRIMARY KEY,
-                PermissionID INTEGER  NOT NULL,
+                PermissionID INTEGER NOT NULL,
                 PermissionGroupID INTEGER NOT NULL 
+				FOREIGN KEY (PermissionGroupID) REFERENCES PermissionGroups(PermissionGroupID),
+				FOREIGN KEY (PermissionID) REFERENCES Permissions(PermissionID)
 				);
 
 DROP TABLE Permissions;
@@ -59,7 +64,9 @@ CREATE TABLE PhoneBookings(
                 PhoneID INTEGER NOT NULL,
                 DateTimeOut DATETIME NOT NULL,
                 DateTimeIn DATETIME NOT NULL,
-                CollectionComment VARCHAR(1000)
+                CollectionComment VARCHAR(1000),
+				FOREIGN KEY (UserID) REFERENCES UserAccounts(UserID)
+				FOREIGN KEY (PhoneID) REFERENCES Phone(PhoneID)
 				);
 
 DROP TABLE Phone;

@@ -35,32 +35,46 @@ $statement = $PDO->prepare($Query);
 $statement->execute();
 $results = $statement->fetchAll();
 
-$Count = 0;
-foreach($results as $Row){
-	$TopPX = intval((($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*90);
-	$LeftPX = intval((($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*90);
+//Verifying Token is valid.
+$TokenQuery = "SELECT * FROM UserSessions WHERE SessionToken = '" . $_GET['Token'] . "';";
+$TokenStatement = $PDO->prepare($TokenQuery);
+$TokenStatement->execute();
+$TokenQueryResults = $TokenStatement->fetchAll();
 
-	$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
-	$TimeMade = $dtime->getTimestamp();
-
-	$HexAppend = dechex(256-(intval(intval($TimeMade-$timeMin))*(256/100)));
+if(!empty($TokenQueryResults[0])){
+	$Count = 0;
+	foreach($results as $Row){
+		$TopPX = intval((($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*90);
+		$LeftPX = intval((($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*90);
 	
-	if(strlen($HexAppend) == 1){
-		$HexAppend = "0" . $HexAppend;
+		$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
+		$TimeMade = $dtime->getTimestamp();
+	
+		$HexAppend = dechex(256-(intval(intval($TimeMade-$timeMin))*(256/100)));
+		
+		if(strlen($HexAppend) == 1){
+			$HexAppend = "0" . $HexAppend;
+		}
+		
+		$HexCode = "#" . $HexAppend . $HexAppend . "ff";
+		
+		echo "<div class='Point-Overlay' style='background: " . $HexCode . ";top: " . $TopPX . "px;left: " . $LeftPX . "px;'></div>";
+		$Count = $Count + 1;
+		$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
+		$TimeMade = $dtime->getTimestamp();
 	}
-	
-	$HexCode = "#" . $HexAppend . $HexAppend . "ff";
-	
-	echo "<div class='Point-Overlay' style='background: " . $HexCode . ";top: " . $TopPX . "px;left: " . $LeftPX . "px;'></div>";
-	$Count = $Count + 1;
-	$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
-	$TimeMade = $dtime->getTimestamp();
+}else{
+	echo "
+	<div class='Pannel Spacer'>
+	<div class='Course-Image'>
+	Please Log In To Access The Map!
+	</div>
+	</div>
+	";
 }
 
-//Testing data
-//echo "<PRE>";
 
-//print_r($results);
+
 
 ?>
 
