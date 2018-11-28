@@ -36,32 +36,49 @@ $statement->execute();
 $results = $statement->fetchAll();
 
 //Verifying Token is valid.
-$TokenQuery = "SELECT * FROM UserSessions WHERE SessionToken = '" . $_GET['Token'] . "';";
+$TokenQuery = "SELECT PermissionName FROM UserSessions 
+INNER JOIN UserAccounts ON UserSessions.UserID = UserAccounts.UserID
+INNER JOIN PermissionGroupAllocation ON UserAccounts.UserID = PermissionGroupAllocation.UserID
+INNER JOIN PermissionGroups ON PermissionGroupAllocation.PermissionGroupID = PermissionGroups.PermissionGroupID
+INNER JOIN PermissionAllocation ON PermissionGroups.PermissionGroupID = PermissionAllocation.PermissionGroupID
+INNER JOIN Permissions ON Permissions.PermissionID = PermissionAllocation.PermissionID
+WHERE SessionToken = '" . $_GET['Token'] . "';";
+
 $TokenStatement = $PDO->prepare($TokenQuery);
 $TokenStatement->execute();
 $TokenQueryResults = $TokenStatement->fetchAll();
 
-if(!empty($TokenQueryResults[0])){
-	$Count = 0;
-	foreach($results as $Row){
-		$TopPX = intval((($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*90);
-		$LeftPX = intval((($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*90);
-	
-		$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
-		$TimeMade = $dtime->getTimestamp();
-	
-		$HexAppend = dechex(256-(intval(intval($TimeMade-$timeMin))*(256/100)));
+$AllowedToView = false;
+foreach($TokenQueryResults as $Row){
+	if($Row[0] == "CourseMapView"){
+		$AllowedToView = true;
+	}
+}
+
+
+if($TokenQueryResults[0]){
+	if($AllowedToView){
+		$Count = 0;
+		foreach($results as $Row){
+			$TopPX = intval((($Row['Longitude'] - $TenPXMarkLong)/($HunderedPXMarkLong-$TenPXMarkLong))*90);
+			$LeftPX = intval((($Row['Latitude'] - $TenPXMarkLat)/($HunderedPXMarkLat-$TenPXMarkLat))*90);
 		
-		if(strlen($HexAppend) == 1){
-			$HexAppend = "0" . $HexAppend;
+			$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
+			$TimeMade = $dtime->getTimestamp();
+		
+			$HexAppend = dechex(256-(intval(intval($TimeMade-$timeMin))*(256/100)));
+			
+			if(strlen($HexAppend) == 1){
+				$HexAppend = "0" . $HexAppend;
+			}
+			
+			$HexCode = "#" . $HexAppend . $HexAppend . "ff";
+			
+			echo "<div class='Point-Overlay' style='background: " . $HexCode . ";top: " . $TopPX . "px;left: " . $LeftPX . "px;'></div>";
+			$Count = $Count + 1;
+			$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
+			$TimeMade = $dtime->getTimestamp();
 		}
-		
-		$HexCode = "#" . $HexAppend . $HexAppend . "ff";
-		
-		echo "<div class='Point-Overlay' style='background: " . $HexCode . ";top: " . $TopPX . "px;left: " . $LeftPX . "px;'></div>";
-		$Count = $Count + 1;
-		$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
-		$TimeMade = $dtime->getTimestamp();
 	}
 }else{
 	echo "

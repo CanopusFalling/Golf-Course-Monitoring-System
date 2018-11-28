@@ -12,7 +12,7 @@ $statement = $PDO->prepare($Command0);
 $statement->execute();
 $UserResults = $statement->fetchAll();
 $UserID = $UserResults[0][0];
-$Username = $UserResults[0][1];
+$UserName = $UserResults[0][1];
 $Email = $UserResults[0][2];
 $FirstName = $UserResults[0][3];
 $SecondName = $UserResults[0][4];
@@ -45,9 +45,20 @@ $Password = $UserResults[0][5];
 <div class="PannelItem">
 Welcome <?php echo $FirstName . " " . $SecondName;?>
 </div>
-
 <div class="PannelItem">
-
+UserName: <?php echo $UserName; ?>
+</div>
+<div class="PannelItem">
+FirstName: <?php echo $FirstName; ?>
+</div>
+<div class="PannelItem">
+LastName: <?php echo $SecondName; ?>
+</div>
+<div class="PannelItem">
+Email: <?php echo $Email; ?>
+</div>
+<div class="PannelItem">
+Date of Birth: <?php echo $DateOfBirth; ?>
 </div>
 </div>
 </div>
