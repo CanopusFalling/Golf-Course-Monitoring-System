@@ -158,6 +158,19 @@ h1,h2,h3,h4,h5,h6 {
 	color: white;
 }
 
+.ButtonLargeText{
+	background-color: rgba(50,50,50,0.6);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    margin: 8px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+	width: 100%;
+}
+
 /*Course map formattig and general point formatting*/
 .Course-Image{
 	position: relative;

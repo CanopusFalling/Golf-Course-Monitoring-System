@@ -35,7 +35,7 @@ $statement = $PDO->prepare($Query);
 $statement->execute();
 $results = $statement->fetchAll();
 
-//Verifying Token is valid.
+//Verifying Permission is valid.
 $TokenQuery = "SELECT PermissionName FROM UserSessions 
 INNER JOIN UserAccounts ON UserSessions.UserID = UserAccounts.UserID
 INNER JOIN PermissionGroupAllocation ON UserAccounts.UserID = PermissionGroupAllocation.UserID
@@ -56,7 +56,7 @@ foreach($TokenQueryResults as $Row){
 }
 
 
-if($TokenQueryResults[0]){
+if(!empty($TokenQueryResults[0])){
 	if($AllowedToView){
 		$Count = 0;
 		foreach($results as $Row){
@@ -79,12 +79,20 @@ if($TokenQueryResults[0]){
 			$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
 			$TimeMade = $dtime->getTimestamp();
 		}
+	}else{
+		echo "
+		<div class='Pannel Spacer'>
+		<div class='Course-Image'>
+		Your Account Isn't Permitted to View Players On The Map.
+		</div>
+		</div>
+		";
 	}
 }else{
 	echo "
 	<div class='Pannel Spacer'>
 	<div class='Course-Image'>
-	Please Log In To Access The Map!
+	Please Log In To View People On The Map.
 	</div>
 	</div>
 	";
