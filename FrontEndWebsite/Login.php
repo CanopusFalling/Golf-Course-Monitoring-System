@@ -27,7 +27,7 @@ if(!empty($_POST)){
 		$Command = "INSERT INTO UserSessions (SessionToken, DateIssued, UserID) VALUES ('" . $Token . "', '" . $date . "', " . $results[0][0] . ");";
 		$PDO->query($Command);
 		
-		setcookie("BedAndCountySessionToken", $Token, time() + (86400 * 30), "/");
+		setcookie("BedAndCountySessionToken", $Token, time() + (60 * 60), "/");
 		
 		header("Location: UserHome.php");
 		die();

@@ -6,13 +6,12 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 	$Command = "SELECT * FROM UserSessions WHERE SessionToken = '" . $_COOKIE["BedAndCountySessionToken"] . "';";
 	$statement = $PDO->prepare($Command);
 	$statement->execute();
+	$SessionResults = $statement->fetchAll();
 
-	if(!empty($SessionResults[0][3])){
-		$SessionResults = $statement->fetchAll();
-
-		$Command0 = "SELECT * FROM UserAccounts WHERE UserID = " . $SessionResults[0][3] . ";";
-		$statement = $PDO->prepare($Command0);
-		$statement->execute();
+	$Command0 = "SELECT * FROM UserAccounts WHERE UserID = " . $SessionResults[0][3] . ";";
+	$statement = $PDO->prepare($Command0);
+	$GoodCookie = $statement->execute();
+	if($GoodCookie){
 		$UserResults = $statement->fetchAll();
 		$UserID = $UserResults[0][0];
 		$UserName = $UserResults[0][1];
@@ -68,6 +67,7 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 		try{
 			echo "
 			<li class='Login Block' onclick='window.location.href = \"UserHome.php\"'>" .  $FirstName . " " . $SecondName . "</li>
+			<li class='Login Block' onclick='document.cookie = \"BedAndCountySessionToken=0\"; window.location.href = \"Index.php\"'>Log Out</li>
 			";
 		}catch(Exception $e){
 			echo"

@@ -62,6 +62,7 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 	}else{
 		echo "
 		<li class='Login Block' onclick='window.location.href = \"UserHome.php\"'>" .  $FirstName . " " . $SecondName . "</li>
+		<li class='Login Block' onclick='document.cookie = \"BedAndCountySessionToken=0\"; window.location.href = \"Index.php\"'>Log Out</li>
 		";
 	}
 	

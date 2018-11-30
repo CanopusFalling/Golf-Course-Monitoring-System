@@ -30,5 +30,6 @@ function UpdateMap(){
 }
 
 window.onload = function(){
+	UpdateMap();
 	setInterval(UpdateMap, 5000);
 }

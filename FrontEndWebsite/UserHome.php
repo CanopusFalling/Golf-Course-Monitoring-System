@@ -57,7 +57,7 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 	<li class="TopBlock" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
 	<li class="TopLogin"><?php echo $FirstName . " " . $SecondName;?></li>
-	<li class="Login Block" onclick="document.cookie = 'BedAndCountySessionToken=0';">Log Out</li>
+	<li class="Login Block" onclick="document.cookie = 'BedAndCountySessionToken=0'; window.location.href = 'index.php'">Log Out</li>
 </Nav>
 
 <div class="PannelSpacer">
