@@ -35,7 +35,10 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 		$TokenQueryResults = $TokenStatement->fetchAll();
 	}else{
 		setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
+		header("Location: Index.php");
 	}
+}else{
+	header("Location: Index.php");
 }
 ?>
 
@@ -54,7 +57,7 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 <div class="Frame4"></div>
 
 <Nav class="Navigation">
-	<li class="TopBlock" onclick="window.location.href = 'Index.php'">Home</li>
+	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
 	<li class="TopLogin"><?php echo $FirstName . " " . $SecondName;?></li>
 	<li class="Login Block" onclick="document.cookie = 'BedAndCountySessionToken=0'; window.location.href = 'index.php'">Log Out</li>
@@ -82,7 +85,7 @@ Email: <?php echo $Email; ?>
 <div class="PannelItem">
 Date of Birth: <?php echo $DateOfBirth; ?>
 </div>
-<Button onclick="window.location.href = 'EditUserDetails.php'" class="ButtonLargeText">Change Details</Button>
+<Button onclick="window.location.href = 'ChangeUserDetails.php'" class="ButtonLargeText">Change Details</Button>
 </div>
 </div>
 </body>
