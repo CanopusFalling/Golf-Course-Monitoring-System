@@ -38,6 +38,7 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 		header("Location: Index.php");
 	}
 }else{
+	setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 	header("Location: Index.php");
 }
 ?>

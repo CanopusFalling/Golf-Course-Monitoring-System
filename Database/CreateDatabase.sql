@@ -94,5 +94,3 @@ INSERT INTO PermissionAllocation (PermissionID, PermissionGroupID) VALUES
 DELETE FROM PermissionGroupAllocation;
 INSERT INTO PermissionGroupAllocation (UserID, PermissionGroupID) VALUES
 (1,1);
-
-
