@@ -1,5 +1,5 @@
 <?php
-if(!empty($_COOKIE["BedAndCountySessionToken"])){
+if(!empty($_COOKIE["BedAndCountySessionToken"]) or empty($_GET['UserID'])){
 	//$PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
 	$PDO = new PDO('sqlite:C:\Users\kent_\OneDrive\Documents\Project work\GolfCourseGPSManagementSystem\Database\GolfData.db');
 
@@ -40,6 +40,19 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 				$AccountEditing = true;
 			}
 		}
+		
+		$UserQuery = $PDO -> prepare("SELECT * FROM UserAccounts WHERE UserID = " . $_GET['UserID']);
+		$UserQuery -> execute();
+		$Users = $UserQuery->fetchAll();
+		$FocusUserID = $Users[0][0];
+		$FocusUserName = $Users[0][1];
+		$FocusEmail = $Users[0][2];
+		$FocusFirstName = $Users[0][3];
+		$FocusSecondName = $Users[0][4];
+		$FocusDateOfBirth = $Users[0][5];
+		$FocusPassword = $Users[0][5];
+		
+		
 	}else{
 		setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 		header("Location: Index.php");
@@ -47,6 +60,11 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 }else{
 	setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 	header("Location: Index.php");
+}
+
+if(!$AccountEditing){
+	header("Location: Index.php");
+	die();
 }
 ?>
 
@@ -67,38 +85,35 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 <Nav class="Navigation">
 	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
-	<?php
-	if($AccountEditing){
-		echo"<li class='Block' onclick='window.location.href = \"AdminConsole.php\"'>Admin Console</li>";
-	}
-	?>
+	<li class='Block' onclick='window.location.href = \"AdminConsole.php\"'>Admin Console</li>
 	<li class="TopLogin"><?php echo $FirstName . " " . $SecondName;?></li>
 	<li class="Login Block" onclick="document.cookie = 'BedAndCountySessionToken=0'; window.location.href = 'index.php'">Log Out</li>
 </Nav>
 
-<div class="PannelSpacer">
+<div class="FullPannelSpacer">
+<div class="FullPannel">
+<div class="PannelItem">
+Editing <?php echo $FocusFirstName . " " . $FocusSecondName;?>
+</div>
+</div>
 <div class="Pannel">
 <div class="PannelItem">
-Welcome <?php echo $FirstName . " " . $SecondName;?>
-</div>
-</div>
-<div class="Pannel">
-<div class="PannelItem">
-UserName: <?php echo $UserName; ?>
+UserName: <?php echo $FocusUserName; ?>
 </div>
 <div class="PannelItem">
-FirstName: <?php echo $FirstName; ?>
+FirstName: <?php echo $FocusFirstName; ?>
 </div>
 <div class="PannelItem">
-LastName: <?php echo $SecondName; ?>
+LastName: <?php echo $FocusSecondName; ?>
 </div>
 <div class="PannelItem">
-Email: <?php echo $Email; ?>
+Email: <?php echo $FocusEmail; ?>
 </div>
 <div class="PannelItem">
-Date of Birth: <?php echo $DateOfBirth; ?>
+Date of Birth: <?php echo $FocusDateOfBirth; ?>
 </div>
-<Button onclick="window.location.href = 'ChangeUserDetails.php'" class="ButtonLargeText">Change Details</Button>
+<Button onclick="window.location.href = 'ChangeUserDetails.php'" class="ButtonLargeText">Reset Password</Button>
+<Button onclick="window.location.href = 'ChangeUserDetails.php'" class="DeleteButton">DeleteUser</Button>
 </div>
 </div>
 </body>

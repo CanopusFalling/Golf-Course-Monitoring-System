@@ -110,7 +110,7 @@ Email:<br>
 Date of Birth:<br>
 <input class="LoginInput" type="Date" name="DateOfBirth" value="<?php echo $DateOfBirth ?>" required><br>
 
-<Button class="FormButton" type="submit">Sign Up</Button>
+<Button class="FormButton" type="submit">Change Details</Button>
 
 <?php
 $Class = "";

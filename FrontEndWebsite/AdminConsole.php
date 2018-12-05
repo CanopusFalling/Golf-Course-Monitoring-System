@@ -40,6 +40,7 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 				$AccountEditing = true;
 			}
 		}
+		
 	}else{
 		setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 		header("Location: Index.php");
@@ -47,6 +48,11 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 }else{
 	setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 	header("Location: Index.php");
+}
+
+if(!$AccountEditing){
+	header("Location: Index.php");
+	die();
 }
 ?>
 
@@ -67,38 +73,37 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 <Nav class="Navigation">
 	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
-	<?php
-	if($AccountEditing){
-		echo"<li class='Block' onclick='window.location.href = \"AdminConsole.php\"'>Admin Console</li>";
-	}
-	?>
+	<li class='Block' onclick='window.location.href = \"AdminConsole.php\"'>Admin Console</li>
 	<li class="TopLogin"><?php echo $FirstName . " " . $SecondName;?></li>
 	<li class="Login Block" onclick="document.cookie = 'BedAndCountySessionToken=0'; window.location.href = 'index.php'">Log Out</li>
 </Nav>
 
-<div class="PannelSpacer">
-<div class="Pannel">
-<div class="PannelItem">
-Welcome <?php echo $FirstName . " " . $SecondName;?>
-</div>
-</div>
-<div class="Pannel">
-<div class="PannelItem">
-UserName: <?php echo $UserName; ?>
-</div>
-<div class="PannelItem">
-FirstName: <?php echo $FirstName; ?>
-</div>
-<div class="PannelItem">
-LastName: <?php echo $SecondName; ?>
-</div>
-<div class="PannelItem">
-Email: <?php echo $Email; ?>
-</div>
-<div class="PannelItem">
-Date of Birth: <?php echo $DateOfBirth; ?>
-</div>
-<Button onclick="window.location.href = 'ChangeUserDetails.php'" class="ButtonLargeText">Change Details</Button>
+<div class="FullPannelSpacer">
+<div class="FullPannel">
+<table id="Accounts">
+	<tr>
+		<th>UserName</th>
+		<th>Email</th>
+		<th>FirstName</th>
+		<th>LastName</th>
+		<th>Date Of Birth</th>
+	</tr>
+	<?php
+	$UserQuery = $PDO -> prepare("SELECT * FROM UserAccounts;");
+	$UserQuery -> execute();
+	$Users = $UserQuery->fetchAll();
+	foreach($Users as $User){
+		echo "<tr onclick=\"window.location.href = 'UserBreakdown.php?UserID=" . $User[0] . "'\">";
+		$Count = 0;
+		foreach($User as $Item){
+			if(($Count % 2) == 0 and $Count >= 2 and $Count < 12){
+				echo "<td>" . $Item . "</td>";
+			}
+			$Count = $Count + 1;
+		}
+	}
+	?>
+</table>
 </div>
 </div>
 </body>
