@@ -1,5 +1,5 @@
 <?php
-if(!empty($_COOKIE["BedAndCountySessionToken"])){
+if(!empty($_COOKIE["BedAndCountySessionToken"]) or empty($_GET['UserID'])){
 	//$PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
 	$PDO = new PDO('sqlite:C:\Users\kent_\OneDrive\Documents\Project work\GolfCourseGPSManagementSystem\Database\GolfData.db');
 
@@ -40,7 +40,32 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 				$AccountEditing = true;
 			}
 		}
+		$FocusUserQuery = "SELECT PermissionName FROM UserAccounts
+		INNER JOIN PermissionGroupAllocation ON UserAccounts.UserID = PermissionGroupAllocation.UserID
+		INNER JOIN PermissionGroups ON PermissionGroupAllocation.PermissionGroupID = PermissionGroups.PermissionGroupID
+		INNER JOIN PermissionAllocation ON PermissionGroups.PermissionGroupID = PermissionAllocation.PermissionGroupID
+		INNER JOIN Permissions ON Permissions.PermissionID = PermissionAllocation.PermissionID
+		WHERE UserAccounts.UserID = '" . $_GET['UserID'] . "';";
+
+		$PermUserQuery = $PDO -> prepare($FocusUserQuery);
+		$PermUserQuery -> execute();
+		$PermUserResult= $PermUserQuery -> fetchAll();
+		echo $PermUserResult;
+		$ValidDelete = true;
+		foreach($PermUserQuery as $UserPerms){
+			foreach($UserPerms as $Item){
+				if($Item == "Admin"){
+					$ValidDelete = false;
+				}
+			}
+		}
+		if($ValidDelete){
+			$DeleteUserStatement = "DELETE FROM UserAccounts WHERE UserID = " . $_GET['UserID'] . ";";
+			$DeleteUserQuery = $PDO -> prepare($DeleteUserStatement);
+			$DeleteUserQuery -> execute();
+		}
 		
+		header("Location: AdminConsole.php");
 	}else{
 		setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 		header("Location: Index.php");
@@ -55,56 +80,3 @@ if(!$AccountEditing){
 	die();
 }
 ?>
-
-<html>
-<head>
-<title>Bedford And County Golf Course</title>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet"> 
-<link rel="stylesheet" href="Styles.css">
-<!--<script src="BackgroundCycler.js"></script>-->
-</head>
-<body>
-
-<div class="Frame1"></div>
-<div class="Frame2"></div>
-<div class="Frame3"></div>
-<div class="Frame4"></div>
-
-<Nav class="Navigation">
-	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
-	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
-	<li class='TopBlock' onclick="window.location.href = 'AdminConsole.php'">Admin Console</li>
-	<li class="Login Block" onclick="window.location.href = 'UserHome.php'"><?php echo $FirstName . " " . $SecondName;?></li>
-	<li class="Login Block" onclick="document.cookie = 'BedAndCountySessionToken=0'; window.location.href = 'index.php'">Log Out</li>
-</Nav>
-
-<div class="FullPannelSpacer">
-<div class="FullPannel">
-<table id="Accounts">
-	<tr>
-		<th>UserName</th>
-		<th>Email</th>
-		<th>FirstName</th>
-		<th>LastName</th>
-		<th>Date Of Birth</th>
-	</tr>
-	<?php
-	$UserQuery = $PDO -> prepare("SELECT * FROM UserAccounts;");
-	$UserQuery -> execute();
-	$Users = $UserQuery->fetchAll();
-	foreach($Users as $User){
-		echo "<tr onclick=\"window.location.href = 'UserBreakdown.php?UserID=" . $User[0] . "'\">";
-		$Count = 0;
-		foreach($User as $Item){
-			if(($Count % 2) == 0 and $Count >= 2 and $Count < 12){
-				echo "<td>" . $Item . "</td>";
-			}
-			$Count = $Count + 1;
-		}
-	}
-	?>
-</table>
-</div>
-</div>
-</body>
-</html>

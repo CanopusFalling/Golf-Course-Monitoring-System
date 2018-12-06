@@ -82,39 +82,14 @@ if(!$AccountEditing){
 <div class="Frame3"></div>
 <div class="Frame4"></div>
 
-<Nav class="Navigation">
-	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
-	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
-	<li class='Block' onclick="window.location.href = 'AdminConsole.php'">Admin Console</li>
-	<li class="TopLogin"><?php echo $FirstName . " " . $SecondName;?></li>
-	<li class="Login Block" onclick="document.cookie = 'BedAndCountySessionToken=0'; window.location.href = 'index.php'">Log Out</li>
-</Nav>
-
 <div class="FullPannelSpacer">
 <div class="FullPannel">
-<div class="PannelItem">
-Editing User: <?php echo $FocusFirstName . " " . $FocusSecondName;?>
-</div>
-</div>
-<div class="Pannel">
-<div class="PannelItem">
-UserName: <?php echo $FocusUserName; ?>
-</div>
-<div class="PannelItem">
-FirstName: <?php echo $FocusFirstName; ?>
-</div>
-<div class="PannelItem">
-LastName: <?php echo $FocusSecondName; ?>
-</div>
-<div class="PannelItem">
-Email: <?php echo $FocusEmail; ?>
-</div>
-<div class="PannelItem">
-Date of Birth: <?php echo $FocusDateOfBirth; ?>
-</div>
-<Button onclick="window.location.href = 'EditPermissions.php?UserID=<?php echo $_GET['UserID']; ?>'" class="ButtonLargeText">Edit Permissions</Button>
-<!--<Button onclick="window.location.href = 'ChangeUserDetails.php'" class="ButtonLargeText">ChangeUserDetails</Button>-->
-<Button onclick="window.location.href = 'DeleteUser.php?UserID=<?php echo $_GET['UserID']; ?>'" class="DeleteButton">DeleteUser</Button>
+<Button class="DeleteButton" onclick="window.location.href = 'HiddenDeletePage.php?UserID=<?php echo $_GET['UserID']; ?>'">
+Pressing This Button Will Permanantly Delete The User "<?php echo $FocusUserName; ?>" Are You Sure?
+</Button>
+<Button class="ButtonLargeText" onclick="window.location.href = 'AdminConsole.php'">
+Back To Safety
+</Button>
 </div>
 </div>
 </body>

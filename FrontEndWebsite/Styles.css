@@ -210,6 +210,7 @@ h1,h2,h3,h4,h5,h6 {
 #Accounts td, #Accounts th {
 	border: 2px solid rgba(20,20,20,0.6);
 	padding: 8px;
+	color: white;
 }
 
 #Accounts tr:nth-child(even){
@@ -332,7 +333,7 @@ h1,h2,h3,h4,h5,h6 {
 	animation-duration: 30s;
 	animation-iteration-count: infinite;
 	z-index: -1;
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	left:0px;
 	margin: 0px;
@@ -346,7 +347,7 @@ h1,h2,h3,h4,h5,h6 {
 	animation-duration: 30s;
 	animation-iteration-count: infinite;
 	z-index: -1;
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	left:0px;
 	margin: 0px;
@@ -360,7 +361,7 @@ h1,h2,h3,h4,h5,h6 {
 	animation-duration: 30s;
 	animation-iteration-count: infinite;
 	z-index: -1;
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	left:0px;
 	margin: 0px;
@@ -374,7 +375,7 @@ h1,h2,h3,h4,h5,h6 {
 	animation-duration: 30s;
 	animation-iteration-count: infinite;
 	z-index: -1;
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	left:0px;
 	margin: 0px;
