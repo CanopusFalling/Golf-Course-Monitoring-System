@@ -95,5 +95,35 @@ DELETE FROM PermissionGroupAllocation;
 INSERT INTO PermissionGroupAllocation (UserID, PermissionGroupID) VALUES
 (1,1);
 
-DELETE FROM UserAccounts;
-INSERT INTO UserAccounts ()
+INSERT INTO UserAccounts (UserName, Email, FirstName, LastName, DateOfBirth, PasswordHash) VALUES
+("DuplicateBotto", "Dupe1@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe2@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe3@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe4@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe5@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe6@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe7@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe8@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe9@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe10@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe11@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe12@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe13@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe14@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe15@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe16@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe17@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe18@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe19@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe20@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe21@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe22@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe23@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe24@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe25@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe26@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe27@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe28@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe29@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope"),
+("DuplicateBotto", "Dupe30@Dupe.co.uk", "WhoKnows", "Again, Who Knows", CURRENT_TIMESTAMP, "Lol nope");
+DELETE FROM UserAccounts WHERE UserName = "DuplicateBotto";

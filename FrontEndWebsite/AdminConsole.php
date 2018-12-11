@@ -36,7 +36,7 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 		
 		$AccountEditing = false;
 		foreach($TokenQueryResults as $Row){
-			if($Row[0] == "CourseMapView"){
+			if($Row[0] == "PermissionAssignment"){
 				$AccountEditing = true;
 			}
 		}

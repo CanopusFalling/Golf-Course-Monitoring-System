@@ -33,10 +33,10 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 		$TokenStatement = $PDO->prepare($TokenQuery);
 		$TokenStatement->execute();
 		$TokenQueryResults = $TokenStatement->fetchAll();
-		
+
 		$AccountEditing = false;
 		foreach($TokenQueryResults as $Row){
-			if($Row[0] == "CourseMapView"){
+			if($Row[0] == "PermissionAssignment"){
 				$AccountEditing = true;
 			}
 		}
