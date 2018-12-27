@@ -49,14 +49,18 @@ $TokenStatement->execute();
 $TokenQueryResults = $TokenStatement->fetchAll();
 
 $AllowedToView = false;
+$AllowedToViewDetailed = false;
 foreach($TokenQueryResults as $Row){
 	if($Row[0] == "CourseMapView"){
 		$AllowedToView = true;
 	}
+	if($Row[0] == "DetailedMapView"){
+		$AllowedToViewDetailed = true;
+	}
 }
 
 
-if(!empty($TokenQueryResults[0])){
+if(!empty($_GET['Token'])){
 	if($AllowedToView){
 		$Count = 0;
 		foreach($results as $Row){
@@ -79,11 +83,23 @@ if(!empty($TokenQueryResults[0])){
 			$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
 			$TimeMade = $dtime->getTimestamp();
 		}
+		
+		if($AllowedToViewDetailed){
+			echo "
+			<div class='PannelSpacer'>
+			<div class='Pannel'>
+			<Button class='ButtonLargeText' onclick=\"window.location.href = 'CourseInfo.php'\">
+			View Course Info
+			</div>
+			</div>
+			</div>
+			";
+		}
 	}else{
 		echo "
 		<div class='Pannel Spacer'>
 		<div class='Course-Image'>
-		Your Account Isn't Permitted to View Players On The Map.
+		Your Account Isn't Permitted to View The Position of Players On The Course.
 		</div>
 		</div>
 		";
