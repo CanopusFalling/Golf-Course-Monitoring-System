@@ -63,7 +63,7 @@ CREATE TABLE PhoneBookings(
                 UserID INTEGER NOT NULL,
                 PhoneID INTEGER NOT NULL,
                 DateTimeOut DATETIME NOT NULL,
-                DateTimeIn DATETIME NOT NULL,
+                DateTimeIn DATETIME,
                 CollectionComment VARCHAR(1000),
 				FOREIGN KEY (UserID) REFERENCES UserAccounts(UserID),
 				FOREIGN KEY (PhoneID) REFERENCES Phone(PhoneID)

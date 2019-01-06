@@ -33,16 +33,14 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 		$TokenStatement = $PDO->prepare($TokenQuery);
 		$TokenStatement->execute();
 		$TokenQueryResults = $TokenStatement->fetchAll();
-
-		$AccountEditing = false;
+		
 		$DetailedMapView = false;
 		foreach($TokenQueryResults as $Row){
-			if($Row[0] == "PermissionAssignment"){
-				$AccountEditing = true;
-			}else if($Row[0] == "DetailedMapView"){
+			if($Row[0] == "DetailedMapView"){
 				$DetailedMapView = true;
 			}
 		}
+		
 	}else{
 		setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 		header("Location: Index.php");
@@ -50,6 +48,11 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 }else{
 	setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 	header("Location: Index.php");
+}
+
+if(!$DetailedMapView){
+	header("Location: Index.php");
+	die();
 }
 ?>
 
@@ -70,41 +73,41 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 <Nav class="Navigation">
 	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
-	<?php
-	if($AccountEditing){
-		echo"<li class='Block' onclick='window.location.href = \"AdminConsole.php\"'>Admin Console</li>";
-	}
-	if($DetailedMapView){
-		echo"<li class='Block' onclick='window.location.href = \"SessionConsole.php\"'>Session Console</li>";
-	}
-	?>
-	<li class="TopLogin"><?php echo $FirstName . " " . $SecondName;?></li>
+	<li class="Login Block" onclick="window.location.href = 'UserHome.php'"><?php echo $FirstName . " " . $SecondName;?></li>
 	<li class="Login Block" onclick="document.cookie = 'BedAndCountySessionToken=0'; window.location.href = 'index.php'">Log Out</li>
 </Nav>
 
-<div class="PannelSpacer">
-<div class="Pannel">
-<div class="PannelItem">
-Welcome <?php echo $FirstName . " " . $SecondName;?>
-</div>
-</div>
-<div class="Pannel">
-<div class="PannelItem">
-UserName: <?php echo $UserName; ?>
-</div>
-<div class="PannelItem">
-FirstName: <?php echo $FirstName; ?>
-</div>
-<div class="PannelItem">
-LastName: <?php echo $SecondName; ?>
-</div>
-<div class="PannelItem">
-Email: <?php echo $Email; ?>
-</div>
-<div class="PannelItem">
-Date of Birth: <?php echo $DateOfBirth; ?>
-</div>
-<Button onclick="window.location.href = 'ChangeUserDetails.php'" class="ButtonLargeText">Change Details</Button>
+<div class="FullPannelSpacer">
+<div class="FullPannel">
+<button class="ButtonLargeText" onclick="window.location.href = 'CreateSession.php'">Create Session</button>
+<table id="Accounts">
+	<tr>
+		<th>UserName</th>
+		<th>Time Out</th>
+		<th>Time In</th>
+		<th>Collection Comment</th>
+	</tr>
+	<?php
+	$PhoneBookingsQuery = "SELECT PhoneBookings.BookingID, UserAccounts.UserName, PhoneBookings.DateTimeOut, PhoneBookings.DateTimeIn, PhoneBookings.CollectionComment FROM PhoneBookings
+	INNER JOIN UserAccounts ON PhoneBookings.UserID = UserAccounts.UserID
+	ORDER BY DateTimeOut;";
+	$UserQuery = $PDO -> prepare($PhoneBookingsQuery);
+	$UserQuery -> execute();
+	$Users = $UserQuery->fetchAll();
+	foreach($Users as $User){
+		if($User["DateTimeIn"] == null){
+			echo "<tr onclick=\"window.location.href = 'CloseSession.php?BookingID=" . $User[0] . "'\">";
+		}else{
+			echo "<tr>";
+		}
+		echo "<td>" . $User["UserName"] . "</td>";
+		echo "<td>" . $User["DateTimeOut"] . "</td>";
+		echo "<td>" . $User["DateTimeIn"] . "</td>";
+		echo "<td>" . $User["CollectionComment"] . "</td>";
+		echo "</tr>";
+	}
+	?>
+</table>
 </div>
 </div>
 </body>

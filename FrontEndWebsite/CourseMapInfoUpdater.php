@@ -26,7 +26,7 @@ foreach($TokenQueryResults as $Row){
 }
 
 if($AllowedToViewDetailed){
-	
+	readfile("Pathheresoon");
 }else{
 	echo "
 	<div class='Pannel Spacer'>

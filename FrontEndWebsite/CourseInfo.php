@@ -83,11 +83,9 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 
 <div class="FullPannelSpacer">
 <div class="FullPannel">
-<div class="PannelItem">
 
 <div id="InsertDiv"></div>
 
-</div>
 </div>
 </div>
 
