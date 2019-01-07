@@ -90,7 +90,7 @@ if(!$DetailedMapView){
 	<?php
 	$PhoneBookingsQuery = "SELECT PhoneBookings.BookingID, UserAccounts.UserName, PhoneBookings.DateTimeOut, PhoneBookings.DateTimeIn, PhoneBookings.CollectionComment FROM PhoneBookings
 	INNER JOIN UserAccounts ON PhoneBookings.UserID = UserAccounts.UserID
-	ORDER BY DateTimeOut;";
+	ORDER BY DateTimeOut DESC;";
 	$UserQuery = $PDO -> prepare($PhoneBookingsQuery);
 	$UserQuery -> execute();
 	$Users = $UserQuery->fetchAll();

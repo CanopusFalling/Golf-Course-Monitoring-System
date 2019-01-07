@@ -78,7 +78,7 @@ if(!empty($_GET['Token'])){
 			
 			$HexCode = "#" . $HexAppend . $HexAppend . "ff";
 			
-			echo "<div class='Point-Overlay' style='background: " . $HexCode . ";top: " . $TopPX . "px;left: " . $LeftPX . "px;'></div>";
+			echo "<div class='Point-Overlay' title='" . $Row['Longitude'] . ", " . $Row['Latitude'] . "' style='background: " . $HexCode . ";top: " . $TopPX . "px;left: " . $LeftPX . "px;'></div>";
 			$Count = $Count + 1;
 			$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
 			$TimeMade = $dtime->getTimestamp();
