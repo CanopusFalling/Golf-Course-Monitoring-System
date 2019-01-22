@@ -5,7 +5,9 @@ $PDO = new PDO('sqlite:C:\Users\kent_\OneDrive\Documents\Project work\GolfCourse
 
 $ErrorMessage = "";
 $SuccessMessage = "";
-
+if(!empty($_GET['NewUser'])){
+	$SuccessMessage = "Account Created, Please Log in to Continue.";
+}
 if(!empty($_POST)){
 	$Email = $_POST["Email"];
 	$Password = $_POST["Password"];
@@ -82,5 +84,6 @@ echo "<div class='" . $Class . "'>" . $SuccessMessage; ?></div>
 
 </form>
 </div>
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 </html>

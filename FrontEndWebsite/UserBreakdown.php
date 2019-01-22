@@ -117,5 +117,6 @@ Date of Birth: <?php echo $FocusDateOfBirth; ?>
 <Button onclick="window.location.href = 'DeleteUser.php?UserID=<?php echo $_GET['UserID']; ?>'" class="DeleteButton">DeleteUser</Button>
 </div>
 </div>
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 </html>

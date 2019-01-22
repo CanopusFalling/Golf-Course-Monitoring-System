@@ -1,10 +1,10 @@
 DROP TABLE GPSData;
 CREATE TABLE GPSData(
-                UserID INTEGER,
+                PhoneID INTEGER,
                 DateTimeStamp DATETIME NOT NULL,
                 Longitude DECIMAL NOT NULL,
                 Latitude DECIMAL NOT NULL,
-				FOREIGN KEY (UserID) REFERENCES UserAccounts(UserID)
+				FOREIGN KEY (PhoneID) REFERENCES Phone(PhoneID)
 				);
 				
 DROP TABLE UserAccounts;

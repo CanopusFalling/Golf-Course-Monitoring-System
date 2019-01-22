@@ -28,8 +28,8 @@ foreach($TokenQueryResults as $Row){
 if($AllowedToViewDetailed){
 	
 	echo "
-	<div class='FullPannelSpacer'>
-	<div class='FullPannel'>
+	<div class='PannelSpacer'>
+	<div class='Pannel'>
 	Players On Course</br></br>
 	<table id='Accounts'>
 	<tr>
@@ -40,9 +40,11 @@ if($AllowedToViewDetailed){
 	";
 	
 	$PhoneBookingsQuery = "SELECT UserAccounts.UserID, UserAccounts.UserName, PhoneBookings.DateTimeOut, GPSData.Longitude, GPSData.Latitude FROM PhoneBookings
-	INNER JOIN UserAccounts ON PhoneBookings.UserID = UserAccounts.UserID INNER JOIN GPSData ON UserAccounts.UserID = GPSData.UserID
+	INNER JOIN UserAccounts ON PhoneBookings.UserID = UserAccounts.UserID INNER JOIN GPSData ON PhoneBookings.PhoneID = GPSData.PhoneID
+	WHERE PhoneBookings.DateTimeIn IS NULL
 	GROUP BY UserAccounts.UserID
-	ORDER BY UserAccounts.UserID, GPSData.DateTimeStamp DESC;";
+	ORDER BY GPSData.DateTimeStamp ASC;";
+	
 	$UserQuery = $PDO -> prepare($PhoneBookingsQuery);
 	$UserQuery -> execute();
 	$Users = $UserQuery->fetchAll();

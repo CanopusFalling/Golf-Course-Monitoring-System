@@ -106,5 +106,6 @@ if(!$AccountEditing){
 </table>
 </div>
 </div>
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 </html>

@@ -24,9 +24,10 @@ $HunderedPXMarkLat = -0.484531;
 //$Query = "SELECT * FROM GPSData WHERE DateTimeStamp >= '" . $StartTime . "' AND WHERE DateTimeStamp <= '" . $EndTime . "'" . PhoneIDCondition . ";" ;
 
 $time = time();
-$timeMin = $time - 100;
+$timeMin = $time - 200;
 $date = date('m-d-Y H:i:s', $timeMin);
-$Query = "SELECT * FROM GPSData WHERE DateTimeStamp >= '" . $date . "';";
+$Query = "SELECT * FROM GPSData
+INNER JOIN Phone ON GPSData.PhoneID = Phone.PhoneID INNER JOIN Bookings On Phone.PhoneID = Bookings.PhoneID WHERE DateTimeStamp >= '" . $date . "';";
 
 //Database connection and execution
 //$PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
@@ -70,7 +71,7 @@ if(!empty($_GET['Token'])){
 			$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
 			$TimeMade = $dtime->getTimestamp();
 		
-			$HexAppend = dechex(256-(intval(intval($TimeMade-$timeMin))*(256/100)));
+			$HexAppend = dechex(256-(intval(intval($TimeMade-$timeMin))*(256/200)));
 			
 			if(strlen($HexAppend) == 1){
 				$HexAppend = "0" . $HexAppend;
@@ -78,22 +79,19 @@ if(!empty($_GET['Token'])){
 			
 			$HexCode = "#" . $HexAppend . $HexAppend . "ff";
 			
-			echo "<div class='Point-Overlay' title='" . $Row['Longitude'] . ", " . $Row['Latitude'] . "' style='background: " . $HexCode . ";top: " . $TopPX . "px;left: " . $LeftPX . "px;'></div>";
+			if($AllowedToViewDetailed){
+				$Title = $Row['PhoneID'];
+			}else{
+				$Title = string($Row['Longitude'] . ", " . $Row['Latitude']);
+			}
+			echo "<div class='Point-Overlay' title='" . $Title . "' style='background: " . $HexCode . ";top: " . $TopPX . "px;left: " . $LeftPX . "px;'></div>";
 			$Count = $Count + 1;
 			$dtime = DateTime::createFromFormat("m-d-Y H:i:s", $Row[1]);
 			$TimeMade = $dtime->getTimestamp();
 		}
 		
 		if($AllowedToViewDetailed){
-			echo "
-			<div class='PannelSpacer'>
-			<div class='Pannel'>
-			<Button class='ButtonLargeText' onclick=\"window.location.href = 'CourseInfo.php'\">
-			View Course Info
-			</div>
-			</div>
-			</div>
-			";
+			include 'CourseMapInfoUpdater.php';
 		}
 	}else{
 		echo "

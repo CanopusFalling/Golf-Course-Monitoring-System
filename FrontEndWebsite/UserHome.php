@@ -107,5 +107,6 @@ Date of Birth: <?php echo $DateOfBirth; ?>
 <Button onclick="window.location.href = 'ChangeUserDetails.php'" class="ButtonLargeText">Change Details</Button>
 </div>
 </div>
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 </html>

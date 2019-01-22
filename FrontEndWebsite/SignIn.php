@@ -21,6 +21,7 @@ if(!empty($_POST)){
 			if(filter_var($Email, FILTER_VALIDATE_EMAIL)){
 				if($PDO->query($Command) == true){
 					$SuccessMessage = "Account Created, Please Log In To The Account To Continue...";
+					header("Location: Login.php?NewUser=1");
 				}else{
 					$ErrorMessage = "Email Is Already In Use, Please Proceed To Reset Password.";
 				}
@@ -61,15 +62,15 @@ if(!empty($_POST)){
 <form class="DetailsForm" method="post">
 <div class="Mandatory-Star">*</div>
 User Name:<br>
-<input class="LoginInput" type="text" name="UserName" required><br>
+<input class="LoginInput" type="text" name="UserName" required <?php if(!empty($_POST)){echo "value='" . $UserName . "'";};?>><br>
 
 <div class="Mandatory-Star"></div>
 First Name:<br>
-<input class="LoginInput" type="text" name="FirstName"><br>
+<input class="LoginInput" type="text" name="FirstName" <?php if(!empty($_POST)){echo "value='" . $FirstName . "'";};?>><br>
 
 <div class="Mandatory-Star"></div>
 Last Name:<br>
-<input class="LoginInput" type="text" name="LastName"><br>
+<input class="LoginInput" type="text" name="LastName" <?php if(!empty($_POST)){echo "value='" . $LastName . "'";};?>><br>
 
 <div class="Mandatory-Star">*</div>
 Password:<br>
@@ -81,11 +82,11 @@ Repeat Password:<br>
 
 <div class="Mandatory-Star">*</div>
 Email:<br>
-<input class="LoginInput" type="email" name="Email" required><br>
+<input class="LoginInput" type="email" name="Email" required <?php if(!empty($_POST)){echo "value='" . $Email . "'";};?>><br>
 
 <div class="Mandatory-Star">*</div>
 Date of Birth:<br>
-<input class="LoginInput" type="Date" name="DateOfBirth" required><br>
+<input class="LoginInput" type="Date" name="DateOfBirth" required <?php if(!empty($_POST)){echo "value='" . $DateOfBirth . "'";};?>><br>
 
 <Button class="FormButton" type="submit">Sign Up</Button>
 
@@ -101,5 +102,6 @@ echo "<div class='" . $Class . "'>" . $SuccessMessage; ?></div>
 
 </form>
 </div>
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 </html>

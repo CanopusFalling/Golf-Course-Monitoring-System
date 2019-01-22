@@ -92,5 +92,6 @@ Back To Safety
 </Button>
 </div>
 </div>
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 </html>

@@ -205,5 +205,6 @@ Editing Permissions For User: <?php echo $FocusFirstName . " " . $FocusSecondNam
 <Button type="Submit" class="ButtonLargeText">Change Permissions</Button>
 </div>
 </Form>
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 </html>

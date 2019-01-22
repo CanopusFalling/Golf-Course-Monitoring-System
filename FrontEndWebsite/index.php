@@ -85,6 +85,8 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 Golf Course</h1>
 </div>
 </div>
+
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 </html>
 

@@ -118,4 +118,5 @@ echo "<div class='" . $Class . "'>" . $SuccessMessage; ?></div>
 </form>
 </div>
 </body>
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </html>

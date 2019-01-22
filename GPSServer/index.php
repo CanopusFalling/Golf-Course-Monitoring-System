@@ -2,7 +2,7 @@
 echo $_GET["ID"] . " : " . $_GET["Lat"] . " : " . $_GET["Long"];
 
 $date = date('m-d-Y H:i:s', time());
-$Command = "INSERT INTO GPSData (UserID, DateTimeStamp, Longitude, Latitude) VALUES (" . $_GET["ID"] . ", '" . $date . "', " . $_GET["Lat"] . ", " . $_GET["Long"] . ");";
+$Command = "INSERT INTO GPSData (PhoneID, DateTimeStamp, Longitude, Latitude) VALUES (" . $_GET["ID"] . ", '" . $date . "', " . $_GET["Lat"] . ", " . $_GET["Long"] . ");";
 
 echo "\n" . $Command;
 

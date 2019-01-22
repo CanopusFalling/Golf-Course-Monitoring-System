@@ -90,6 +90,7 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 </div>
 
 </body>
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </html>
 
 

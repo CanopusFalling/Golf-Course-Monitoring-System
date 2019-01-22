@@ -73,10 +73,11 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 <body>
 
 <div id="Map">
-<div class="Course-Image"><img src="ImageGallery/CourseMap.png" alt="Course Map" width="800px" height="1300px"></div>
+<div class="Course-Image" style='float:left;'><img src="ImageGallery/CourseMap.png" alt="Course Map" width="800px" height="1300px"></div>
 
 <div id="InsertDiv"></div>
 </div>
+<img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 
 
