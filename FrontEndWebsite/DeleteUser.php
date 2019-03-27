@@ -100,16 +100,19 @@ if(!$AccountEditing){
 <div class="Frame3"></div>
 <div class="Frame4"></div>
 
+<!--Where all of the delete user pannel lies.-->
 <div class="FullPannelSpacer">
 <div class="FullPannel">
 <Button class="DeleteButton" onclick="window.location.href = 'HiddenDeletePage.php?UserID=<?php echo $_GET['UserID']; ?>'">
 Pressing This Button Will Permanantly Delete The User "<?php echo $FocusUserName; ?>" Are You Sure?
 </Button>
+<!--The delete button.-->
 <Button class="ButtonLargeText" onclick="window.location.href = 'AdminConsole.php'">
 Back To Safety
 </Button>
 </div>
 </div>
+<!--Course Logo-->
 <img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 </html>

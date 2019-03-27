@@ -41,5 +41,5 @@ window.onload = function(){
 	//Runs the Update map function.
 	UpdateMap();
 	//Runs the update map function every 10000 milliseconds or 10 seconds.
-	setInterval(UpdateMap, 5000);
+	setInterval(UpdateMap, 10000);
 }

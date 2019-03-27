@@ -1,17 +1,21 @@
 <?php
+//Checks if the cookie exists.
 if(!empty($_COOKIE["BedAndCountySessionToken"])){
-	//$PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
+	//defines the database connection.
 	$PDO = new PDO('sqlite:C:\Users\kent_\OneDrive\Documents\Project work\GolfCourseGPSManagementSystem\Database\GolfData.db');
-
+	
+	//Queries to find the userID that relates to the session token.
 	$Command = "SELECT * FROM UserSessions WHERE SessionToken = '" . $_COOKIE["BedAndCountySessionToken"] . "';";
 	$statement = $PDO->prepare($Command);
 	$statement->execute();
 	$SessionResults = $statement->fetchAll();
-
+	
+	//Queries to find the user that relates to the user ID.
 	$Command0 = "SELECT * FROM UserAccounts WHERE UserID = " . $SessionResults[0][3] . ";";
 	$statement = $PDO->prepare($Command0);
 	$GoodCookie = $statement->execute();
 	if($GoodCookie){
+		//Returns all of the details of the user from the database and then puts all the components into different variables.
 		$UserResults = $statement->fetchAll();
 		$UserID = $UserResults[0][0];
 		$UserName = $UserResults[0][1];
@@ -29,11 +33,12 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 		INNER JOIN PermissionAllocation ON PermissionGroups.PermissionGroupID = PermissionAllocation.PermissionGroupID
 		INNER JOIN Permissions ON Permissions.PermissionID = PermissionAllocation.PermissionID
 		WHERE SessionToken = '" . $_COOKIE["BedAndCountySessionToken"] . "';";
-
+		//Runs the query above to return all of the user's permissions.
 		$TokenStatement = $PDO->prepare($TokenQuery);
 		$TokenStatement->execute();
 		$TokenQueryResults = $TokenStatement->fetchAll();
 		
+		//Checks if the permissions allow them to view course details.
 		$AllowedToViewDetailed = false;
 		foreach($TokenQueryResults as $Row){
 			if($Row[0] == "DetailedMapView"){
@@ -41,25 +46,39 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 			}
 		}
 		if(!$AllowedToViewDetailed){
+			//If they aren't this sends them to the homepage.
 			header("Location: Index.php");
 		}
 	}else{
+		//If the cookie is invalid this sends them back to the homepage and clears the cookie.
 		setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
+		header("Location: Index.php");
+		//Stops the rest of the page loading.
+		die();
 	}
+}else{
+		//If the cookie doesn't exist this sends them back to the homepage and clears the cookie.
+		setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
+		header("Location: Index.php");
+		//Stops the rest of the page loading.
+		die();
 }
 ?>
 <Head>
 <div id="CodeRefs">
+<!--Code Refs-->
 <link rel="stylesheet" href="Styles.css">
 <Script src="UserViewLocationUpdater.js">
 </Script>
 </div>
 
+<!--Frames for the animation-->
 <div class="Frame1"></div>
 <div class="Frame2"></div>
 <div class="Frame3"></div>
 <div class="Frame4"></div>
 
+<!--Navigation bar division-->
 <Nav class="Navigation">
 	<li class="Block" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="TopBlock" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
@@ -82,20 +101,25 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 </Style>
 </Head>
 <body>
+<!--Shows the text to the right of the map.-->
 <div class="PannelSpacer">
 <div class="Pannel">
 <div class="PannelItem">
 Viewing Position of Booking Session:
 </div>
 <div class="PannelItem" id="BookingID">
+<!--Shows the user ID-->
 <?php echo $_GET["BookingID"]; ?>
 </div>
 </div>
 </div>
+<!--Couses the map-->
 <div id="Map">
 <div class="Course-Image" style='float:left;'><img src="ImageGallery/CourseMap.png" alt="Course Map" width="800px" height="1300px"></div>
 
+<!--Insert div for all of the posisiton of players.-->
 <div id="InsertDiv"></div>
 </div>
+<!--Course Logo-->
 <img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>

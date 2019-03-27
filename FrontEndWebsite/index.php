@@ -1,17 +1,24 @@
 <?php
+//Checks that the cookie exists.
 if(!empty($_COOKIE["BedAndCountySessionToken"])){
-	//$PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
+	//New database connection.
 	$PDO = new PDO('sqlite:C:\Users\kent_\OneDrive\Documents\Project work\GolfCourseGPSManagementSystem\Database\GolfData.db');
-
+	
+	//Uses an SQL query to check the database for the user that is tied to the session token bieng used.
 	$Command = "SELECT * FROM UserSessions WHERE SessionToken = '" . $_COOKIE["BedAndCountySessionToken"] . "';";
 	$statement = $PDO->prepare($Command);
+	//Executes the command.
 	$statement->execute();
+	//Retrives all the data.
 	$SessionResults = $statement->fetchAll();
-
+	
+	//Find all the data baout the user ID from the last query.
 	$Command0 = "SELECT * FROM UserAccounts WHERE UserID = " . $SessionResults[0][3] . ";";
 	$statement = $PDO->prepare($Command0);
+	//Runs the query
 	$GoodCookie = $statement->execute();
 	if($GoodCookie){
+		//Gets all of the data about the user and files it into all the correct variables.
 		$UserResults = $statement->fetchAll();
 		$UserID = $UserResults[0][0];
 		$UserName = $UserResults[0][1];
@@ -29,11 +36,13 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 		INNER JOIN PermissionAllocation ON PermissionGroups.PermissionGroupID = PermissionAllocation.PermissionGroupID
 		INNER JOIN Permissions ON Permissions.PermissionID = PermissionAllocation.PermissionID
 		WHERE SessionToken = '" . $_COOKIE["BedAndCountySessionToken"] . "';";
-
+		
+		//Gets all the info about the user's permissions.
 		$TokenStatement = $PDO->prepare($TokenQuery);
 		$TokenStatement->execute();
 		$TokenQueryResults = $TokenStatement->fetchAll();
 	}else{
+		//If the cookie is invalid it is reset.
 		setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 	}
 }
@@ -42,22 +51,27 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 <html>
 <head>
 <title>Bedford And County Golf Course</title>
+<!--External script references-->
 <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet"> 
 <link rel="stylesheet" href="Styles.css">
+<!--Legacy from javascript background changer.-->
 <!--<script src="BackgroundCycler.js"></script>-->
 </head>
 <body>
 
+<!--Background frame slideshow divs-->
 <div class="Frame1"></div>
 <div class="Frame2"></div>
 <div class="Frame3"></div>
 <div class="Frame4"></div>
 
+<!--Navigation bar-->
 <Nav class="Navigation">
 	<li class="TopBlock" onclick="window.location.href = 'Index.php'">Home</li>
 	<li class="Block" onclick="window.location.href = 'CourseMap.php'">CourseMap</li>
 	
 	<?php
+	//Decides on what goes in the top right depending upon if the user is logged in.
 	if(empty($_COOKIE["BedAndCountySessionToken"])){
 		echo"
 		<li class='Login Block' onclick='window.location.href = \"Login.php\"'>Login</li>
@@ -65,11 +79,13 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 		";
 	}else{
 		try{
+			//Inserts the user's name into the top right and a loggout button.
 			echo "
 			<li class='Login Block' onclick='window.location.href = \"UserHome.php\"'>" .  $FirstName . " " . $SecondName . "</li>
 			<li class='Login Block' onclick='document.cookie = \"BedAndCountySessionToken=0\"; window.location.href = \"Index.php\"'>Log Out</li>
 			";
 		}catch(Exception $e){
+			//In case of an error resorts to standard screen.
 			echo"
 			<li class='Login Block' onclick='window.location.href = \"Login.php\"'>Login</li>
 			<li class='Login Block' onclick='window.location.href = \"SignIn.php\"'>Sign Up</li>
@@ -79,6 +95,7 @@ if(!empty($_COOKIE["BedAndCountySessionToken"])){
 	
 	?>
 </Nav>
+<!--Title of the page is all here.-->
 <div class="TitleText">
 <div class="TitleTextBox">
 <h1>Bedford And County</br>
@@ -86,6 +103,7 @@ Golf Course</h1>
 </div>
 </div>
 
+<!--Course Logo-->
 <img src="ImageGallery/bedfordcountylogo.jpg" class="CourseLogo"/>
 </body>
 </html>
