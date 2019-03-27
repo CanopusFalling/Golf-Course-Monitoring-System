@@ -1,17 +1,21 @@
 <?php
+//Checks that the cookie for the admin exists and that the User ID exists in the URL
 if(!empty($_COOKIE["BedAndCountySessionToken"]) or empty($_GET['UserID'])){
-	//$PDO = new PDO('sqlite:/home/samkent/Documents/GolfCourseGPSManagementSystem/Database/GolfData.db');
+	//New database connection.
 	$PDO = new PDO('sqlite:C:\Users\kent_\OneDrive\Documents\Project work\GolfCourseGPSManagementSystem\Database\GolfData.db');
-
+	
+	//Selects the user id tied to the session token in the cookie.
 	$Command = "SELECT * FROM UserSessions WHERE SessionToken = '" . $_COOKIE["BedAndCountySessionToken"] . "';";
 	$statement = $PDO->prepare($Command);
 	$statement->execute();
 	$SessionResults = $statement->fetchAll();
-
+	
+	//Gets all the user's details based on the user ID from the previous query.
 	$Command0 = "SELECT * FROM UserAccounts WHERE UserID = " . $SessionResults[0][3] . ";";
 	$statement = $PDO->prepare($Command0);
 	$GoodCookie = $statement->execute();
 	if($GoodCookie){
+		//fetches all of the data if the query returns any results and then splits all of those into seperate variables.
 		$UserResults = $statement->fetchAll();
 		$UserID = $UserResults[0][0];
 		$UserName = $UserResults[0][1];
@@ -29,11 +33,13 @@ if(!empty($_COOKIE["BedAndCountySessionToken"]) or empty($_GET['UserID'])){
 		INNER JOIN PermissionAllocation ON PermissionGroups.PermissionGroupID = PermissionAllocation.PermissionGroupID
 		INNER JOIN Permissions ON Permissions.PermissionID = PermissionAllocation.PermissionID
 		WHERE SessionToken = '" . $_COOKIE["BedAndCountySessionToken"] . "';";
-
+		
+		//Runs the query to get all the permissions tied to the user.
 		$TokenStatement = $PDO->prepare($TokenQuery);
 		$TokenStatement->execute();
 		$TokenQueryResults = $TokenStatement->fetchAll();
 		
+		//Checks if they are allowed to edit accounts.
 		$AccountEditing = false;
 		foreach($TokenQueryResults as $Row){
 			if($Row[0] == "CourseMapView"){
@@ -41,6 +47,7 @@ if(!empty($_COOKIE["BedAndCountySessionToken"]) or empty($_GET['UserID'])){
 			}
 		}
 		
+		//Gets all the details of the user that is about to be deleted.
 		$UserQuery = $PDO -> prepare("SELECT * FROM UserAccounts WHERE UserID = " . $_GET['UserID']);
 		$UserQuery -> execute();
 		$Users = $UserQuery->fetchAll();
@@ -54,16 +61,24 @@ if(!empty($_COOKIE["BedAndCountySessionToken"]) or empty($_GET['UserID'])){
 		
 		
 	}else{
+		//Sets the cookie to null and redirects the user to home if the cookie they have is invalid.
 		setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 		header("Location: Index.php");
+		//Ensures that the rest of the page can't load.
+		die();
 	}
 }else{
+	//If the user has either no cookie or the user ID isn't there then the user is sent back to the home and logged out.
 	setcookie("BedAndCountySessionToken", null, time() + (86400 * 30), "/");
 	header("Location: Index.php");
+	//Ensures that no more of the page loads.
+	die();
 }
 
 if(!$AccountEditing){
+	//Sends the user home if they dont have permission.
 	header("Location: Index.php");
+	//Stops the rest of the page from loading.
 	die();
 }
 ?>
@@ -71,12 +86,15 @@ if(!$AccountEditing){
 <html>
 <head>
 <title>Bedford And County Golf Course</title>
+<!--External scripts referenced here.-->
 <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet"> 
 <link rel="stylesheet" href="Styles.css">
+<!--Legacy script from when I attempted to try cycling the background with javascript.-->
 <!--<script src="BackgroundCycler.js"></script>-->
 </head>
 <body>
 
+<!--Background frame animation divs-->
 <div class="Frame1"></div>
 <div class="Frame2"></div>
 <div class="Frame3"></div>
